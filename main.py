@@ -1,7 +1,4 @@
-from pathlib import Path
-
-cli_row="*"*13
-
+import os
 
 class Library:
 
@@ -25,7 +22,7 @@ class Library:
         
         for item in book_list:
             temp_list=item.split(",")
-            print(f"Book: {temp_list[0]}, Author: {temp_list[1]}")   
+            print(f"Book: {temp_list[0]}, Author: {temp_list[1]}")  
 
     def addBook(self):
 
@@ -37,30 +34,44 @@ class Library:
             book_string+=", "
         
         self.txt_file.write("\n"+book_string)
-
-
-
-    def addBookAlternative(self):
         
-        newBook={"Title": None, "Author": None, "Release Year": None, "No of Pages": None}
-        helper_string_list=["book title", "author", "release year", "number of pages"]
-        j=0
-        
-        for i in newBook.keys():
-            newBook[i]=input(f"Enter the {helper_string_list[j]}: ")
-            j+=1
-        
-    
-
-        
-    
     def removeBook(self):
-        pass 
+        
+        book_string=""
+        book_list=[]
 
+        to_be_removed=input("Enter the title of the book to be removed: ")
+    
+        for line in self.txt_file:
+            book_string+=line 
+        
+        book_list=book_string.splitlines()
+        loop_counter=0
+
+        for item in book_list:
+            temp_list=item.split(",")
+            del temp_list[-1]
+            
+            if temp_list[0]==to_be_removed:
+                break
+    
+            loop_counter+=1
+        
+        del book_list[loop_counter]
+        self.txt_file.close()
+        new_file=open("books.txt", "w+")
+
+        for item in book_list:
+            new_file.write(item+"\n")
+        
+        new_file.close()
 
 lib=Library("books.txt")
+cli_row="*"*13
 
 while True:
+    print(cli_row)
+    print("MODEST LIBRARY DATABASE ver. 1.0")
     print(cli_row)
     print("1) List Books")
     print("2) Add Book")
@@ -75,7 +86,9 @@ while True:
     elif choice=="2":
         lib.addBook()
     elif choice=="3":
-        pass
+        lib.removeBook()
+        del lib
+        lib=Library("books.txt")
     elif choice=="q" or choice =="Q":
         del lib
         break
