@@ -2,12 +2,6 @@ from pathlib import Path
 
 cli_row="*"*13
 
-class Book:
-
-    def __init__(self):
-        pass
-
-
 
 class Library:
 
@@ -31,13 +25,34 @@ class Library:
         
         for item in book_list:
             temp_list=item.split(",")
-            print(f"Book: {temp_list[0]}, Author: {temp_list[1]}")
+            print(f"Book: {temp_list[0]}, Author: {temp_list[1]}")   
+
+    def addBook(self):
+
+        helper_string_list=["book title", "author", "release year", "number of pages"]
+        book_string=""
+
+        for i in range (len(helper_string_list)):
+            book_string+=input(f"Enter the {helper_string_list[i]}: ")
+            book_string+=", "
         
+        self.txt_file.write("\n"+book_string)
+
+
+
+    def addBookAlternative(self):
+        
+        newBook={"Title": None, "Author": None, "Release Year": None, "No of Pages": None}
+        helper_string_list=["book title", "author", "release year", "number of pages"]
+        j=0
+        
+        for i in newBook.keys():
+            newBook[i]=input(f"Enter the {helper_string_list[j]}: ")
+            j+=1
+        
+    
 
         
-
-    def addBook(self, book_obj):
-        pass
     
     def removeBook(self):
         pass 
@@ -58,7 +73,7 @@ while True:
     if choice=="1":
         lib.listBooks()
     elif choice=="2":
-        pass
+        lib.addBook()
     elif choice=="3":
         pass
     elif choice=="q" or choice =="Q":
