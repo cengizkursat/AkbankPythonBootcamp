@@ -23,10 +23,16 @@ class Library:
     def listBooks(self):
         book_list=[]
         book_string=""
+    
         for line in self.txt_file:
             book_string+=line 
+        
         book_list=book_string.splitlines()
-        print(book_list)
+        
+        for item in book_list:
+            temp_list=item.split(",")
+            print(f"Book: {temp_list[0]}, Author: {temp_list[1]}")
+        
 
         
 
